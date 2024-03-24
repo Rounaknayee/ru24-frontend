@@ -5,8 +5,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 import LogoutButton from "./logout-button";
 import LoginButton from "./login-button";
 
-
-
 const MainNav = () => (
   <Nav className="mr-auto">
     <Nav.Link
@@ -17,14 +15,8 @@ const MainNav = () => (
     >
       Home
     </Nav.Link>
-    <Nav.Link
-      as={RouterNavLink}
-      to="/profile"
-      exact
-      activeClassName="router-link-exact-active"
-    >
-      Profile
-    </Nav.Link>
+    {/* Only render Profile tab if user is logged in */}
+    <AuthenticatedProfileNav />
     <Nav.Link
       as={RouterNavLink}
       to="/external-api"
@@ -36,15 +28,31 @@ const MainNav = () => (
   </Nav>
 );
 
+const AuthenticatedProfileNav = () => {
+  const { isAuthenticated } = useAuth0();
+
+  return isAuthenticated ? (
+    <Nav.Link
+      as={RouterNavLink}
+      to="/profile"
+      exact
+      activeClassName="router-link-exact-active"
+    >
+      Shop
+    </Nav.Link>
+  ) : null;
+};
+
 const AuthNav = () => {
   const { isAuthenticated } = useAuth0();
 
   return (
     <Nav className="justify-content-end">
-      {isAuthenticated ? <LogoutButton /> : <LoginButton/>}
+      {isAuthenticated ? <LogoutButton /> : <LoginButton />}
     </Nav>
-  )
-}
+  );
+};
+
 const NavBar = () => {
   return (
     <Navbar bg="light" expand="md">
