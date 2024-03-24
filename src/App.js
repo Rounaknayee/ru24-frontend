@@ -22,7 +22,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           {/* Only render Profile route if user is authenticated */}
-          {isAuthenticated && <Route path="/profile" component={Profile} />}
+          {isAuthenticated && <Route path="/shop" component={Profile} />}
           <Route path="/external-api" component={ExternalApi} />
           {/* Redirect to Home page if user is not authenticated */}
           {!isAuthenticated && <Redirect to="/" />}

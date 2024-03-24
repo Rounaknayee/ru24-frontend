@@ -34,7 +34,7 @@ const AuthenticatedProfileNav = () => {
   return isAuthenticated ? (
     <Nav.Link
       as={RouterNavLink}
-      to="/profile"
+      to="/shop"
       exact
       activeClassName="router-link-exact-active"
     >
