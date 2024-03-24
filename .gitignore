@@ -128,3 +128,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# misc - environment variables 
+.DS_Store
+.env.local
+.env.developmental.local
+.env.production.local
+.env  
