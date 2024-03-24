@@ -130,8 +130,8 @@ dist
 .pnp.*
 
 # misc - environment variables 
-.DS_Store
-.env.local
-.env.developmental.local
-.env.production.local
-.env  
+# .DS_Store
+# .env.local
+# .env.developmental.local
+# .env.production.local
+# .env  

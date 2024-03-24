@@ -1,59 +1,20 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import { Auth0Provider } from "@auth0/auth0-react";
-import history from "./utils/history";
-import ReactDOM from 'react-dom';
-import { getConfig } from "./config";
+import ReactDOM from "react-dom";
+import App from "./app";
+import { BrowserRouter as Router } from "react-router-dom";
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+import "./index.css";
+import { Auth0Provider } from "@auth0/auth0-react";
+import Auth0ProviderWithHistory from "./auth0-provider-with-history";
+
+import "./index.css"
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Auth0Provider 
-      domain={domain}
-      clientId={clientId}
-      redirectUri={window.location.origin}
-    >
+  <Router>
+    <Auth0ProviderWithHistory>
     <App />
-    </Auth0Provider>
-    
-  </React.StrictMode>
-)
-
-const onRedirectCallback = (appState) => {
-  history.push(
-    appState && appState.returnTo ? appState.returnTo : window.location.pathname
-  );
-};
-
-// Please see https://auth0.github.io/auth0-react/interfaces/Auth0ProviderOptions.html
-// for a full list of the available properties on the provider
-const config = getConfig();
-
-const providerConfig = {
-  domain: config.domain,
-  clientId: config.clientId,
-  onRedirectCallback,
-  authorizationParams: {
-    redirect_uri: window.location.origin,
-    ...(config.audience ? { audience: config.audience } : null),
-  },
-};
-
-const root = createRoot(document.getElementById('root'));
-root.render(
-  <Auth0Provider
-    {...providerConfig}
-  >
-    <App />
-  </Auth0Provider>,
+    </Auth0ProviderWithHistory>
+   
+  </Router>,
+  document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
