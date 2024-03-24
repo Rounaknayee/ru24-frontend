@@ -17,46 +17,22 @@ export const Profile = () => {
     setError(null);
     // Set loading state to true
     setLoading(true);
-    
+
     // Make POST API call
-    // GPT - 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
-    // cloudflare - https://ubiquitous-space-xylophone-9qx5jj5rvwwcvvv-5000.app.github.dev/api/inboundmessage
-    fetch(`3YPrvRVsyZcd1izVPmf7T3BlbkFJdXQW6qvA0YYWRIfSRPuR`, {
+    fetch(`http://172.31.218.15:5000/api/inboundmessage`, {
       method: 'POST',
-      // headers: {
-      //   'Content-Type': 'application/json'
-      // },
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ prompt: inputValue }) // Pass input value as message in the request body
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error("bad network response");
+        throw new Error('Network response was not ok');
       }
-      return response.json();
+      console.log(response)
     })
-    .then(data => {
-      // Set the API response data
-      if ("type" in data) {
-        if (data["type"] == "success") {
-          alert("hmm... try a more specific request")
-        } else if (data["type"] == "listofitems") { // I want meat for under 20 dollars
-            // data = data["text"]["Description"] + " - " + data["text"]["Price"]
-        }
-
-        //data = data["text"]
-      }
-      setApiResponse(data);
-      // Set loading state to false
-      setLoading(false);
-    })
-    .catch(error => {
-      // Set error state
-      setError(error.message);
-      // Set loading state to false
-      setLoading(false);
-    });
   };
-  
 
   return (
     <Container className="mb-5">
@@ -109,23 +85,10 @@ export const Profile = () => {
             {loading ? 'Loading...' : 'Get List'}
           </button>
         </div>
-        {/* Display API response in a textbox */}
+        {/* Display API response */}
         {apiResponse && (
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <input 
-              type="text" 
-              className="response-textbox" 
-              style={{ 
-                width: '100%', 
-                padding: '15px', 
-                borderRadius: '8px', 
-                border: '2px solid #ccc', 
-                fontSize: '16px', 
-                textAlign: 'center' 
-              }} 
-              value={JSON.stringify(apiResponse)} 
-              readOnly 
-            />
+            <label>{apiResponse}</label>
           </div>
         )}
         {/* Display error message */}
